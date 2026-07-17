@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nitya's Birthday Countdown 💖</title>
+  <meta name="description" content="A beautiful and aesthetic pink countdown dedicated to Nitya Patel's birthday on July 19th, 2026. Filled with sweet memories, interactive games, and birthday wishes.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Falling Hearts Canvas Background -->
+  <canvas id="canvas-bg"></canvas>
+
+  <!-- Floating Vinyl Player Widget -->
+  <div id="music-toggle" class="music-widget">
+    <div class="vinyl-disc"></div>
+    <span class="music-text">Ambient Lofi Music</span>
+  </div>
+
+  <!-- Landing Curtain Screen -->
+  <div id="landing-screen">
+    <button id="enter-btn" class="landing-heart-btn" aria-label="Enter Nitya's Birthday Experience">
+      Open
+    </button>
+    <div class="landing-subtitle">Welcome to Nitya's Special Space</div>
+  </div>
+
+  <main>
+    <!-- Title Header -->
+    <header>
+      <h1>Nitya Patel</h1>
+      <p class="subtitle">Special Countdown & Keepsake</p>
+    </header>
+
+    <!-- Countdown Section -->
+    <div id="countdown-wrapper" class="countdown-container">
+      <div class="countdown-title">Counting Down to Nitya's Birthday 💖</div>
+      <div class="timer-grid">
+        <div class="timer-item">
+          <div id="days" class="timer-number">00</div>
+          <div class="timer-label">Days</div>
+        </div>
+        <div class="timer-item">
+          <div id="hours" class="timer-number">00</div>
+          <div class="timer-label">Hours</div>
+        </div>
+        <div class="timer-item">
+          <div id="minutes" class="timer-number">00</div>
+          <div class="timer-label">Mins</div>
+        </div>
+        <div class="timer-item">
+          <div id="seconds" class="timer-number">00</div>
+          <div class="timer-label">Secs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Birthday Celebration Section (Hidden until Countdown reaches 0) -->
+    <div id="birthday-wrapper" class="birthday-section">
+      <div class="birthday-banner">Happy Birthday, Nitya! 🎂✨💖</div>
+      
+      <!-- Virtual Birthday Cake -->
+      <div class="cake-container">
+        <div class="cake">
+          <div class="cake-layer"></div>
+          <div class="cake-drips"></div>
+        </div>
+        <div class="candle-wrapper">
+          <div class="candle" id="candle-1">
+            <div class="flame"></div>
+          </div>
+          <div class="candle" id="candle-2">
+            <div class="flame"></div>
+          </div>
+          <div class="candle" id="candle-3">
+            <div class="flame"></div>
+          </div>
+        </div>
+      </div>
+      <div id="cake-instruction" class="cake-instruction">Click the candles to blow them out & make a wish! 🕯️</div>
+
+      <!-- Secret Love Letter (Revealed after candles are blown out) -->
+      <div id="letter-wrapper" class="letter-wrapper">
+        <div id="envelope" class="envelope">
+          <div class="envelope-cover">
+            <img src="assets/letter.png" alt="Love Letter Envelope Image" />
+            <div id="wax-seal" class="wax-seal">💖</div>
+            <div class="music-text" style="margin-top: 10px;">Click the seal to read your letter</div>
+          </div>
+          <div class="letter-content">
+            <div id="letter-text" class="letter-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Balloon Popping Interactive Game -->
+    <section class="game-section">
+      <h2 class="section-title">Pop the Balloons</h2>
+      <div class="game-card">
+        <p class="game-instructions">Catch and click the floating balloons to find sweet little secrets! 🎈</p>
+        <div id="balloon-canvas" class="balloon-canvas">
+          
+          <!-- Pop Love Note popup modal -->
+          <div id="pop-note" class="pop-note">
+            <div id="pop-note-text" class="pop-note-text">You are my sunshine! 💖</div>
+            <button id="pop-note-close" class="pop-note-close">Aww! 💕</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

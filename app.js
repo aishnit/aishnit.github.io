@@ -40,26 +40,26 @@ const HOURLY_VIDEOS = [
 
 // 20 Birthday Gifts (Guessing Game)
 const GIFTS = [
-  { id: 1, name: "20 Letters", icon: "✉️", keywords: ["20 letters", "letters", "letter", "envelope"], cheesyLine: "Placeholder cheesy line for 20 Letters 💕" },
-  { id: 2, name: "Birthday Website", icon: "💻", keywords: ["birthday website", "website", "site", "webpage", "code"], cheesyLine: "Placeholder cheesy line for Birthday Website 💕" },
-  { id: 3, name: "Birthday Card", icon: "💟", keywords: ["birthday card", "card", "cards"], cheesyLine: "Placeholder cheesy line for Birthday Card 💕" },
-  { id: 4, name: "Cadbury Gems", icon: "🍬", keywords: ["cadbury gems", "gems", "gem", "cadbury"], cheesyLine: "Placeholder cheesy line for Cadbury Gems 💕" },
-  { id: 5, name: "Orbit", icon: "🍬", keywords: ["orbit", "gum", "chewing gum"], cheesyLine: "Placeholder cheesy line for Orbit 💕" },
-  { id: 6, name: "Natkhat", icon: "🍿", keywords: ["natkhat", "snacks", "snack"], cheesyLine: "Placeholder cheesy line for Natkhat 💕" },
-  { id: 7, name: "Dairy Milk", icon: "🍫", keywords: ["dairy milk", "dairymilk", "chocolate", "cadbury dairy milk"], cheesyLine: "Placeholder cheesy line for Dairy Milk 💕" },
-  { id: 8, name: "Perfume", icon: "🧴", keywords: ["perfume", "scent", "fragrance", "smell"], cheesyLine: "Placeholder cheesy line for Perfume 💕" },
-  { id: 9, name: "Book", icon: "📚", keywords: ["book", "books", "novel", "reading"], cheesyLine: "Placeholder cheesy line for Book 💕" },
-  { id: 10, name: "Coffee", icon: "☕", keywords: ["coffee", "starbucks", "caffeine", "brew"], cheesyLine: "Placeholder cheesy line for Coffee 💕" },
-  { id: 11, name: "Polaroids", icon: "📷", keywords: ["polaroids", "polaroid", "photos", "photo", "pictures"], cheesyLine: "Placeholder cheesy line for Polaroids 💕" },
-  { id: 12, name: "Custom Star Map", icon: "🌌", keywords: ["custom star map", "star map", "starmap", "stars", "constellations"], cheesyLine: "Placeholder cheesy line for Custom Star Map 💕" },
-  { id: 13, name: "Birthday Newspaper", icon: "📰", keywords: ["birthday newspaper", "newspaper", "news", "paper"], cheesyLine: "Placeholder cheesy line for Birthday Newspaper 💕" },
-  { id: 14, name: "Coloring Book", icon: "🎨", keywords: ["coloring book", "coloring", "colouring"], cheesyLine: "Placeholder cheesy line for Coloring Book 💕" },
-  { id: 15, name: "Diary", icon: "📔", keywords: ["diary", "notebook", "journal"], cheesyLine: "Placeholder cheesy line for Diary 💕" },
-  { id: 16, name: "Crayons", icon: "🖍️", keywords: ["crayons", "crayon", "colors", "colours"], cheesyLine: "Placeholder cheesy line for Crayons 💕" },
-  { id: 17, name: "Birthday Video", icon: "🎥", keywords: ["birthday video", "video", "movie", "film"], cheesyLine: "Placeholder cheesy line for Birthday Video 💕" },
-  { id: 18, name: "Flowers", icon: "💐", keywords: ["flowers", "flower", "rose", "roses", "bouquet"], cheesyLine: "Placeholder cheesy line for Flowers 💕" },
-  { id: 19, name: "Cake", icon: "🎂", keywords: ["cake", "cakes", "pastry"], cheesyLine: "Placeholder cheesy line for Cake 💕" },
-  { id: 20, name: "Lighter", icon: "🔥", keywords: ["lighter", "light", "fire"], cheesyLine: "Placeholder cheesy line for Lighter 💕" }
+  { id: 1, name: "20 Letters", icon: "✉️", keywords: ["20 letters", "letters", "letter", "envelope"], cheesyLine: "A letter to all 20 nitya's until today 💕" },
+  { id: 2, name: "Birthday Website", icon: "💻", keywords: ["birthday website", "website", "site", "webpage", "code"], cheesyLine: "your interface to birthday world 💕" },
+  { id: 3, name: "Birthday Card", icon: "💟", keywords: ["birthday card", "card", "cards"], cheesyLine: "just another reminder that it is BIRTHDAY 💕" },
+  { id: 4, name: "Cadbury Gems", icon: "🍬", keywords: ["cadbury gems", "gems", "gem", "cadbury"], cheesyLine: "Because you are gem to me 💕" },
+  { id: 5, name: "Orbit", icon: "🍬", keywords: ["orbit", "gum", "chewing gum"], cheesyLine: "because that is what I do around you 💕" },
+  { id: 6, name: "Natkhat", icon: "🍿", keywords: ["natkhat", "snacks", "snack"], cheesyLine: "perfect description of your personality 💕" },
+  { id: 7, name: "Dairy Milk", icon: "🍫", keywords: ["dairy milk", "dairymilk", "chocolate", "cadbury dairy milk"], cheesyLine: "ab yadav ji ki ghar ki bahu banegi to chcolocate to yehi milegi na 💕" },
+  { id: 8, name: "Perfume", icon: "🧴", keywords: ["perfume", "scent", "fragrance", "smell"], cheesyLine: "beause you are the scent of life 💕" },
+  { id: 9, name: "Book", icon: "📚", keywords: ["book", "books", "novel", "reading"], cheesyLine: "because emotions are better read than said 💕" },
+  { id: 10, name: "Coffee", icon: "☕", keywords: ["coffee", "starbucks", "caffeine", "brew"], cheesyLine: "good morning sleepyhead 💕" },
+  { id: 11, name: "Polaroids", icon: "📷", keywords: ["polaroids", "polaroid", "photos", "photo", "pictures"], cheesyLine: "memories, I will also keep you in my pocket 💕" },
+  { id: 12, name: "Custom Star Map", icon: "🌌", keywords: ["custom star map", "star map", "starmap", "stars", "constellations"], cheesyLine: "the fault in our stars 💕" },
+  { id: 13, name: "The Nitya Express", icon: "📰", keywords: ["the nitya express", "nitya express", "express", "newspaper", "news", "paper"], cheesyLine: "Extra! Extra! Read all about us! 💕" },
+  { id: 14, name: "Coloring Book", icon: "🎨", keywords: ["coloring book", "coloring", "colouring"], cheesyLine: "for my superheroine 💕" },
+  { id: 15, name: "Diary", icon: "📔", keywords: ["diary", "notebook", "journal"], cheesyLine: "for you to write your feelings out 💕" },
+  { id: 16, name: "Crayons", icon: "🖍️", keywords: ["crayons", "crayon", "colors", "colours"], cheesyLine: "fill those pages like you filled colours in my life 💕" },
+  { id: 17, name: "Birthday Video", icon: "🎥", keywords: ["birthday video", "video", "movie", "film"], cheesyLine: "unlock each one by one 💕" },
+  { id: 18, name: "Flowers", icon: "💐", keywords: ["flowers", "flower", "rose", "roses", "bouquet"], cheesyLine: "of course some for my sunflower 💕" },
+  { id: 19, name: "Cake", icon: "🎂", keywords: ["cake", "cakes", "pastry"], cheesyLine: "ooh, you will love this one 💕" },
+  { id: 20, name: "Lighter", icon: "🔥", keywords: ["lighter", "light", "fire"], cheesyLine: "the way you light up my universe 💕" }
 ];
 
 // Compliments for popped balloons

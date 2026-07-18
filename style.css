@@ -689,17 +689,11 @@ h1 {
 
 /* Surprises Container and Grid Styling */
 .surprises-container {
-  display: none;
+  display: flex;
   width: 100%;
   flex-direction: column;
   gap: 50px;
   margin-top: 45px;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
-.surprises-container.active {
-  display: flex;
-  opacity: 1;
 }
 
 .interactive-section {

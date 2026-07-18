@@ -79,6 +79,15 @@ const COMPLIMENTS = [
 // --- Surprises & Gift Guessing Game State ---
 let guessedGifts = new Set();
 
+let storageAvailable = true;
+try {
+  const testKey = "__storage_test__";
+  localStorage.setItem(testKey, testKey);
+  localStorage.removeItem(testKey);
+} catch (e) {
+  storageAvailable = false;
+}
+
 // 2. State & Audio variables
 let audioCtx = null;
 let musicInterval = null;
@@ -825,14 +834,6 @@ function closeVideoModal() {
 }
 
 // --- Gift Guessing Helper Functions ---
-let storageAvailable = true;
-try {
-  const testKey = "__storage_test__";
-  localStorage.setItem(testKey, testKey);
-  localStorage.removeItem(testKey);
-} catch (e) {
-  storageAvailable = false;
-}
 
 function initGiftGame() {
   if (!storageAvailable) return;

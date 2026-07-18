@@ -76,22 +76,8 @@ const COMPLIMENTS = [
   "I love you more than words can say. 💕"
 ];
 
-// --- Surprises & Gift Guessing Game DOM Elements & States ---
-const videoGrid = document.getElementById("video-grid");
-const videoModal = document.getElementById("video-modal");
-const modalIframe = document.getElementById("modal-video-iframe");
-const modalTitle = document.getElementById("modal-video-title");
-const modalClose = document.getElementById("modal-close");
-
+// --- Surprises & Gift Guessing Game State ---
 let guessedGifts = new Set();
-
-const giftGrid = document.getElementById("gift-grid");
-const giftsDiscoveredCount = document.getElementById("gifts-discovered-count");
-const guessInput = document.getElementById("gift-guess-input");
-const guessBtn = document.getElementById("gift-guess-btn");
-const guessFeedback = document.getElementById("guess-feedback");
-const completionModal = document.getElementById("gift-completion-modal");
-const completionClose = document.getElementById("completion-close");
 
 // 2. State & Audio variables
 let audioCtx = null;
@@ -445,10 +431,11 @@ function triggerBirthdayCelebration() {
   birthdayWrapper.classList.add("active");
   celebrationMode = true;
 
-  // Initialize and render interactive sections
+  // Initialize, render, and bind interactive sections
   initGiftGame();
   renderVideoGrid();
   renderGiftGrid();
+  setupSurprises();
 
   // Fire an initial burst of confetti particles
   for (let i = 0; i < 80; i++) {
@@ -759,6 +746,7 @@ function isVideoUnlocked(videoHour) {
 }
 
 function renderVideoGrid() {
+  const videoGrid = document.getElementById("video-grid");
   if (!videoGrid) return;
   videoGrid.innerHTML = "";
   
@@ -807,7 +795,11 @@ function formatHour12(hour) {
 }
 
 function openVideoModal(video) {
+  const videoModal = document.getElementById("video-modal");
+  const modalIframe = document.getElementById("modal-video-iframe");
+  const modalTitle = document.getElementById("modal-video-title");
   if (!videoModal || !modalIframe || !modalTitle) return;
+  
   modalTitle.textContent = video.title;
   modalIframe.src = `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`;
   videoModal.classList.add("active");
@@ -819,7 +811,10 @@ function openVideoModal(video) {
 }
 
 function closeVideoModal() {
+  const videoModal = document.getElementById("video-modal");
+  const modalIframe = document.getElementById("modal-video-iframe");
   if (!videoModal || !modalIframe) return;
+  
   videoModal.classList.remove("active");
   modalIframe.src = "";
   
@@ -828,18 +823,6 @@ function closeVideoModal() {
     audioCtx.resume();
   }
 }
-
-if (modalClose) {
-  modalClose.addEventListener("click", closeVideoModal);
-}
-if (videoModal) {
-  videoModal.addEventListener("click", (e) => {
-    if (e.target === videoModal) {
-      closeVideoModal();
-    }
-  });
-}
-
 
 // --- Gift Guessing Helper Functions ---
 let storageAvailable = true;
@@ -865,6 +848,10 @@ function initGiftGame() {
 }
 
 function renderGiftGrid() {
+  const giftGrid = document.getElementById("gift-grid");
+  const giftsDiscoveredCount = document.getElementById("gifts-discovered-count");
+  const guessInput = document.getElementById("gift-guess-input");
+  const guessFeedback = document.getElementById("guess-feedback");
   if (!giftGrid) return;
   giftGrid.innerHTML = "";
   
@@ -914,6 +901,10 @@ function renderGiftGrid() {
 }
 
 function handleGuess() {
+  const guessInput = document.getElementById("gift-guess-input");
+  const guessFeedback = document.getElementById("guess-feedback");
+  const giftsDiscoveredCount = document.getElementById("gifts-discovered-count");
+  const completionModal = document.getElementById("gift-completion-modal");
   if (!guessInput || !guessFeedback || !giftsDiscoveredCount) return;
   
   const rawInput = guessInput.value;
@@ -1000,18 +991,43 @@ function handleGuess() {
   }
 }
 
-if (guessBtn) {
-  guessBtn.addEventListener("click", handleGuess);
+// Binds all dynamic modal and guessing triggers securely
+function setupSurprises() {
+  const modalClose = document.getElementById("modal-close");
+  const videoModal = document.getElementById("video-modal");
+  const guessBtn = document.getElementById("gift-guess-btn");
+  const guessInput = document.getElementById("gift-guess-input");
+  const completionClose = document.getElementById("completion-close");
+  const completionModal = document.getElementById("gift-completion-modal");
+
+  if (modalClose) {
+    modalClose.removeEventListener("click", closeVideoModal);
+    modalClose.addEventListener("click", closeVideoModal);
+  }
+  if (videoModal) {
+    videoModal.addEventListener("click", (e) => {
+      if (e.target === videoModal) {
+        closeVideoModal();
+      }
+    });
+  }
+  if (guessBtn) {
+    guessBtn.removeEventListener("click", handleGuess);
+    guessBtn.addEventListener("click", handleGuess);
+  }
+  if (guessInput) {
+    guessInput.removeEventListener("keypress", handleGuessKey);
+    guessInput.addEventListener("keypress", handleGuessKey);
+  }
+  if (completionClose) {
+    completionClose.addEventListener("click", () => {
+      if (completionModal) completionModal.classList.remove("active");
+    });
+  }
 }
-if (guessInput) {
-  guessInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      handleGuess();
-    }
-  });
-}
-if (completionClose) {
-  completionClose.addEventListener("click", () => {
-    if (completionModal) completionModal.classList.remove("active");
-  });
+
+function handleGuessKey(e) {
+  if (e.key === "Enter") {
+    handleGuess();
+  }
 }

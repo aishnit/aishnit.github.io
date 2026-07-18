@@ -93,6 +93,39 @@
           </div>
         </div>
       </div>
+
+      <!-- Surprises Container (Revealed after letter is read) -->
+      <div id="surprises-container" class="surprises-container">
+        <!-- Hourly Surprise Videos -->
+        <section id="hourly-videos-section" class="interactive-section">
+          <h2 class="section-title">Hourly Sparks of Love</h2>
+          <p class="section-intro">A new surprise video unlocks every hour of your birthday! Check back throughout the day. ✨</p>
+          <div id="video-grid" class="video-grid">
+            <!-- Dynamic Video Cards will be inserted here -->
+          </div>
+        </section>
+
+        <!-- Gift Guessing Game -->
+        <section id="gift-guessing-section" class="interactive-section">
+          <h2 class="section-title">The Mystery Gift Hunt</h2>
+          <p class="section-intro">I've prepared 20 special gifts for you. Can you guess what they are? Type your guess below to reveal them! 🎁</p>
+          
+          <div class="guess-input-container">
+            <input type="text" id="gift-guess-input" placeholder="Type a gift name (e.g., Perfume)..." autocomplete="off" />
+            <button id="gift-guess-btn">Guess! 💝</button>
+          </div>
+          <div id="guess-feedback" class="guess-feedback"></div>
+          
+          <div class="gift-status">
+            Gifts Discovered: <span id="gifts-discovered-count">0</span> / 20
+          </div>
+          
+          <div id="gift-grid" class="gift-grid">
+            <!-- Dynamic Gift Cards will be inserted here -->
+          </div>
+        </section>
+      </div>
+
     </div>
 
 
@@ -115,6 +148,27 @@
     </section>
 
   </main>
+
+  <!-- Video Player Modal Overlay -->
+  <div id="video-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close-btn">&times;</button>
+      <div class="video-player-wrapper">
+        <iframe id="modal-video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <h3 id="modal-video-title" class="modal-video-title">Surprise Video</h3>
+    </div>
+  </div>
+
+  <!-- Gift Game Completion Modal Overlay -->
+  <div id="gift-completion-modal" class="modal-overlay">
+    <div class="modal-content completion-content">
+      <div class="completion-emoji">🎉🎁💖</div>
+      <h2>You Found All My Gifts!</h2>
+      <p>Yay! You guessed every single gift correctly. You know me and our love so well! I hope these little surprises put a huge smile on your face. I love you to the moon and back! 💕</p>
+      <button id="completion-close" class="pop-note-close" style="padding: 10px 30px; font-size: 1rem;">Aww, I love you! 🥰</button>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

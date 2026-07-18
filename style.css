@@ -686,3 +686,417 @@ h1 {
   .birthday-banner { font-size: 2.2rem; }
   .letter-text { font-size: 1.6rem; }
 }
+
+/* Surprises Container and Grid Styling */
+.surprises-container {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 50px;
+  margin-top: 45px;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+.surprises-container.active {
+  display: flex;
+  opacity: 1;
+}
+
+.interactive-section {
+  width: 100%;
+  max-width: 850px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 35px;
+  box-shadow: 0 15px 35px var(--shadow-pink);
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.section-intro {
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+/* Hourly Videos Grid */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 15px;
+  width: 100%;
+}
+
+.video-card {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 20px 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  aspect-ratio: 1;
+  box-shadow: 0 4px 10px var(--shadow-strong);
+}
+
+.video-card:not(.locked):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px var(--shadow-pink);
+  border-color: var(--primary-pink);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.video-card:not(.locked):active {
+  transform: scale(0.96);
+}
+
+.video-card.locked {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.video-time-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.video-status-icon {
+  font-size: 2rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.video-card:not(.locked):hover .video-status-icon {
+  transform: scale(1.2);
+}
+
+.video-unlock-time {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* Guessing Input UI */
+.guess-input-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 0 auto 15px;
+  width: 100%;
+  max-width: 480px;
+}
+
+#gift-guess-input {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: 2px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text-dark);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+#gift-guess-input:focus {
+  border-color: var(--primary-pink);
+  box-shadow: 0 0 10px var(--shadow-pink);
+  background: #fff;
+}
+
+#gift-guess-btn {
+  padding: 12px 25px;
+  border-radius: 30px;
+  border: none;
+  background: var(--primary-pink);
+  color: white;
+  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px var(--shadow-pink);
+}
+
+#gift-guess-btn:hover {
+  background: var(--hot-pink);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 74, 107, 0.3);
+}
+
+#gift-guess-btn:active {
+  transform: translateY(0);
+}
+
+.guess-feedback {
+  font-size: 0.95rem;
+  font-weight: 600;
+  height: 24px;
+  margin-bottom: 25px;
+  color: var(--deep-blush);
+  transition: all 0.3s ease;
+}
+
+.gift-status {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+#gifts-discovered-count {
+  color: var(--hot-pink);
+  font-size: 1.3rem;
+  font-family: var(--font-body);
+}
+
+/* Gift Cards Grid & Flip Animation */
+.gift-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 15px;
+  width: 100%;
+}
+
+.gift-card {
+  perspective: 1000px;
+  aspect-ratio: 0.9;
+  cursor: pointer;
+}
+
+.gift-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.gift-card.guessed .gift-card-inner {
+  transform: rotateY(180deg);
+}
+
+.gift-card-front,
+.gift-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 8px;
+  box-sizing: border-box;
+}
+
+.gift-card-front {
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 0 15px rgba(255, 141, 161, 0.08), 0 4px 10px var(--shadow-strong);
+  transition: border-color 0.3s ease;
+}
+
+.gift-card:hover .gift-card-front {
+  border-color: var(--primary-pink);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.gift-front-emoji {
+  font-size: 2.2rem;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 4px 5px var(--shadow-pink));
+  animation: float-gift 3s ease-in-out infinite;
+}
+
+.gift-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.gift-card-back {
+  background: white;
+  border-color: var(--primary-pink);
+  transform: rotateY(180deg);
+  box-shadow: 0 8px 20px var(--shadow-pink);
+  gap: 4px;
+}
+
+.gift-back-icon {
+  font-size: 1.8rem;
+  margin-bottom: 2px;
+}
+
+.gift-back-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.gift-back-cheesy {
+  font-family: var(--font-handwritten);
+  font-size: 1.25rem;
+  line-height: 1.1;
+  color: var(--hot-pink);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Modals Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(74, 43, 48, 0.65);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  width: 90%;
+  max-width: 600px;
+  padding: 30px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  position: relative;
+  transform: scale(0.85);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-sizing: border-box;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 2.2rem;
+  border: none;
+  background: none;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: var(--hot-pink);
+}
+
+.video-player-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  background: #000;
+}
+
+.video-player-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.modal-video-title {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: var(--text-dark);
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Completion Modal Specifics */
+.completion-content {
+  text-align: center;
+  padding: 40px 30px;
+  max-width: 480px;
+}
+
+.completion-emoji {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  animation: pulse-heart 1.5s infinite;
+}
+
+.completion-content h2 {
+  font-family: var(--font-title);
+  color: var(--hot-pink);
+  margin-bottom: 12px;
+  font-size: 1.8rem;
+}
+
+.completion-content p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-medium);
+  margin-bottom: 25px;
+}
+
+/* Animation Keyframes */
+@keyframes float-gift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.wiggle-animation {
+  animation: wiggle 0.4s ease 2;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.pop-success-scale {
+  animation: popSuccess 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popSuccess {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+

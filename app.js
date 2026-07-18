@@ -6,6 +6,62 @@
 const TARGET_DATE_STR = "2026-07-19T00:00:00+05:30";
 const targetTime = new Date(TARGET_DATE_STR).getTime();
 
+// Check for debug mode (?debug=true) to bypass countdown and time-locks
+const urlParams = new URLSearchParams(window.location.search);
+const isDebug = urlParams.get('debug') === 'true';
+
+// 24 Hourly Surprise Videos (URLs/YouTube IDs are placeholders)
+const HOURLY_VIDEOS = [
+  { hour: 0, title: "12:00 AM - Midnight Surprise 🎂", youtubeId: "IuqpuOEtobk" },
+  { hour: 1, title: "1:00 AM - Cute Memories 📸", youtubeId: "-coJ8uIHsho" },
+  { hour: 2, title: "2:00 AM - Soft Melodies 🎶", youtubeId: "k8iH8_KuSqY" },
+  { hour: 3, title: "3:00 AM - Late Night Thoughts 🌌", youtubeId: "QdV_f8qprdg" },
+  { hour: 4, title: "4:00 AM - Dreamland ✨", youtubeId: "cN8moHHiFmw" },
+  { hour: 5, title: "5:00 AM - Early Sunrise 🌅", youtubeId: "sKTb53aU1_g" },
+  { hour: 6, title: "6:00 AM - Morning Light ☀️", youtubeId: "0b24aR5yNCE" },
+  { hour: 7, title: "7:00 AM - Warm Coffee ☕", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 8, title: "8:00 AM - Sunny Smile 😊", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 9, title: "9:00 AM - Happy Vibes 🎈", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 10, title: "10:00 AM - Sweet Whispers 🌸", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 11, title: "11:00 AM - Gentle Breeze 🍃", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 12, title: "12:00 PM - Midday Spark ✨", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 13, title: "1:00 PM - Lunchdate Thoughts 🍝", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 14, title: "2:00 PM - Cozy Afternoon 🧸", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 15, title: "3:00 PM - Golden Hour 🌇", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 16, title: "4:00 PM - Sweet Cravings 🍩", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 17, title: "5:00 PM - Sunset Glow 🌆", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 18, title: "6:00 PM - Starry Skies 🌟", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 19, title: "7:00 PM - Cozy Blanket 🧣", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 20, title: "8:00 PM - Candlelight 🕯️", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 21, title: "9:00 PM - Heart to Heart 💕", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 22, title: "10:00 PM - Almost Midnight 🌃", youtubeId: "dQw4w9WgXcQ" },
+  { hour: 23, title: "11:00 PM - The Final Wish 🌠", youtubeId: "dQw4w9WgXcQ" }
+];
+
+// 20 Birthday Gifts (Guessing Game)
+const GIFTS = [
+  { id: 1, name: "20 Letters", icon: "✉️", keywords: ["20 letters", "letters", "letter", "envelope"], cheesyLine: "Placeholder cheesy line for 20 Letters 💕" },
+  { id: 2, name: "Birthday Website", icon: "💻", keywords: ["birthday website", "website", "site", "webpage", "code"], cheesyLine: "Placeholder cheesy line for Birthday Website 💕" },
+  { id: 3, name: "Birthday Card", icon: "💟", keywords: ["birthday card", "card", "cards"], cheesyLine: "Placeholder cheesy line for Birthday Card 💕" },
+  { id: 4, name: "Cadbury Gems", icon: "🍬", keywords: ["cadbury gems", "gems", "gem", "cadbury"], cheesyLine: "Placeholder cheesy line for Cadbury Gems 💕" },
+  { id: 5, name: "Orbit", icon: "🍬", keywords: ["orbit", "gum", "chewing gum"], cheesyLine: "Placeholder cheesy line for Orbit 💕" },
+  { id: 6, name: "Natkhat", icon: "🍿", keywords: ["natkhat", "snacks", "snack"], cheesyLine: "Placeholder cheesy line for Natkhat 💕" },
+  { id: 7, name: "Dairy Milk", icon: "🍫", keywords: ["dairy milk", "dairymilk", "chocolate", "cadbury dairy milk"], cheesyLine: "Placeholder cheesy line for Dairy Milk 💕" },
+  { id: 8, name: "Perfume", icon: "🧴", keywords: ["perfume", "scent", "fragrance", "smell"], cheesyLine: "Placeholder cheesy line for Perfume 💕" },
+  { id: 9, name: "Book", icon: "📚", keywords: ["book", "books", "novel", "reading"], cheesyLine: "Placeholder cheesy line for Book 💕" },
+  { id: 10, name: "Coffee", icon: "☕", keywords: ["coffee", "starbucks", "caffeine", "brew"], cheesyLine: "Placeholder cheesy line for Coffee 💕" },
+  { id: 11, name: "Polaroids", icon: "📷", keywords: ["polaroids", "polaroid", "photos", "photo", "pictures"], cheesyLine: "Placeholder cheesy line for Polaroids 💕" },
+  { id: 12, name: "Custom Star Map", icon: "🌌", keywords: ["custom star map", "star map", "starmap", "stars", "constellations"], cheesyLine: "Placeholder cheesy line for Custom Star Map 💕" },
+  { id: 13, name: "Birthday Newspaper", icon: "📰", keywords: ["birthday newspaper", "newspaper", "news", "paper"], cheesyLine: "Placeholder cheesy line for Birthday Newspaper 💕" },
+  { id: 14, name: "Coloring Book", icon: "🎨", keywords: ["coloring book", "coloring", "colouring"], cheesyLine: "Placeholder cheesy line for Coloring Book 💕" },
+  { id: 15, name: "Diary", icon: "📔", keywords: ["diary", "notebook", "journal"], cheesyLine: "Placeholder cheesy line for Diary 💕" },
+  { id: 16, name: "Crayons", icon: "🖍️", keywords: ["crayons", "crayon", "colors", "colours"], cheesyLine: "Placeholder cheesy line for Crayons 💕" },
+  { id: 17, name: "Birthday Video", icon: "🎥", keywords: ["birthday video", "video", "movie", "film"], cheesyLine: "Placeholder cheesy line for Birthday Video 💕" },
+  { id: 18, name: "Flowers", icon: "💐", keywords: ["flowers", "flower", "rose", "roses", "bouquet"], cheesyLine: "Placeholder cheesy line for Flowers 💕" },
+  { id: 19, name: "Cake", icon: "🎂", keywords: ["cake", "cakes", "pastry"], cheesyLine: "Placeholder cheesy line for Cake 💕" },
+  { id: 20, name: "Lighter", icon: "🔥", keywords: ["lighter", "light", "fire"], cheesyLine: "Placeholder cheesy line for Lighter 💕" }
+];
+
 // Compliments for popped balloons
 const COMPLIMENTS = [
   "You make my heart smile! 💖",
@@ -19,6 +75,23 @@ const COMPLIMENTS = [
   "You make the world a much brighter place. 🌟",
   "I love you more than words can say. 💕"
 ];
+
+// --- Surprises & Gift Guessing Game DOM Elements & States ---
+const videoGrid = document.getElementById("video-grid");
+const videoModal = document.getElementById("video-modal");
+const modalIframe = document.getElementById("modal-video-iframe");
+const modalTitle = document.getElementById("modal-video-title");
+const modalClose = document.getElementById("modal-close");
+
+let guessedGifts = new Set();
+
+const giftGrid = document.getElementById("gift-grid");
+const giftsDiscoveredCount = document.getElementById("gifts-discovered-count");
+const guessInput = document.getElementById("gift-guess-input");
+const guessBtn = document.getElementById("gift-guess-btn");
+const guessFeedback = document.getElementById("guess-feedback");
+const completionModal = document.getElementById("gift-completion-modal");
+const completionClose = document.getElementById("completion-close");
 
 // 2. State & Audio variables
 let audioCtx = null;
@@ -332,7 +405,7 @@ function updateCountdown() {
   const now = new Date().getTime();
   const diff = targetTime - now;
 
-  if (diff <= 0) {
+  if (diff <= 0 || isDebug) {
     // Birthday has arrived!
     clearInterval(countdownInterval);
     triggerBirthdayCelebration();
@@ -357,6 +430,11 @@ function triggerBirthdayCelebration() {
   countdownWrapper.style.display = "none";
   birthdayWrapper.classList.add("active");
   celebrationMode = true;
+
+  // Initialize and render interactive sections
+  initGiftGame();
+  renderVideoGrid();
+  renderGiftGrid();
 
   // Fire an initial burst of confetti particles
   for (let i = 0; i < 80; i++) {
@@ -628,9 +706,282 @@ function openLetter() {
       setTimeout(() => {
         sig.style.opacity = 1;
       }, 500);
+
+      // Reveal the surprises (Hourly Videos and Gift Guessing Game)
+      setTimeout(() => {
+        const surprisesContainer = document.getElementById("surprises-container");
+        surprisesContainer.style.display = "flex";
+        
+        // Force reflow and activate animation transition
+        surprisesContainer.offsetHeight;
+        surprisesContainer.classList.add("active");
+        
+        // Scroll smoothly down to the surprises section
+        surprisesContainer.scrollIntoView({ behavior: 'smooth' });
+      }, 2000);
     }
   }
   
   // Delay a bit for CSS transitions
   setTimeout(typeWriter, 800);
+}
+
+// ==========================================
+// 10. Hourly Videos & Gift Guessing Game Logic
+// ==========================================
+
+// --- Video Helper Functions ---
+function isVideoUnlocked(videoHour) {
+  if (isDebug) return true;
+  
+  const now = new Date().getTime();
+  
+  // Construct the target date string for this specific hour in IST timezone
+  // Format: YYYY-MM-DDTHH:mm:ss+05:30
+  const hourString = String(videoHour).padStart(2, '0');
+  const videoUnlockTime = new Date(`2026-07-19T${hourString}:00:00+05:30`).getTime();
+  
+  return now >= videoUnlockTime;
+}
+
+function renderVideoGrid() {
+  if (!videoGrid) return;
+  videoGrid.innerHTML = "";
+  
+  HOURLY_VIDEOS.forEach((video) => {
+    const card = document.createElement("div");
+    card.className = "video-card";
+    
+    const unlocked = isVideoUnlocked(video.hour);
+    const displayTime = formatHour12(video.hour);
+    
+    if (unlocked) {
+      card.innerHTML = `
+        <div class="video-time-label">${displayTime}</div>
+        <div class="video-status-icon">▶️</div>
+        <div class="video-unlock-time">Surprise Unlocked!</div>
+      `;
+      card.addEventListener("click", () => {
+        openVideoModal(video);
+      });
+    } else {
+      card.classList.add("locked");
+      card.innerHTML = `
+        <div class="video-time-label">${displayTime}</div>
+        <div class="video-status-icon">🔒</div>
+        <div class="video-unlock-time">Unlocks at ${displayTime}</div>
+      `;
+      card.addEventListener("click", () => {
+        card.classList.add("wiggle-animation");
+        if (audioCtx) {
+          playChime(150, audioCtx.currentTime, 0.2);
+        }
+        setTimeout(() => {
+          card.classList.remove("wiggle-animation");
+        }, 800);
+      });
+    }
+    
+    videoGrid.appendChild(card);
+  });
+}
+
+function formatHour12(hour) {
+  if (hour === 0) return "12:00 AM";
+  if (hour === 12) return "12:00 PM";
+  return hour < 12 ? `${hour}:00 AM` : `${hour - 12}:00 PM`;
+}
+
+function openVideoModal(video) {
+  if (!videoModal || !modalIframe || !modalTitle) return;
+  modalTitle.textContent = video.title;
+  modalIframe.src = `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`;
+  videoModal.classList.add("active");
+  
+  // Pause ambient audio box
+  if (isPlaying && audioCtx) {
+    audioCtx.suspend();
+  }
+}
+
+function closeVideoModal() {
+  if (!videoModal || !modalIframe) return;
+  videoModal.classList.remove("active");
+  modalIframe.src = "";
+  
+  // Resume ambient audio box
+  if (isPlaying && audioCtx) {
+    audioCtx.resume();
+  }
+}
+
+if (modalClose) {
+  modalClose.addEventListener("click", closeVideoModal);
+}
+if (videoModal) {
+  videoModal.addEventListener("click", (e) => {
+    if (e.target === videoModal) {
+      closeVideoModal();
+    }
+  });
+}
+
+
+// --- Gift Guessing Helper Functions ---
+function initGiftGame() {
+  const savedGifts = localStorage.getItem("nitya_birthday_gifts_guessed");
+  if (savedGifts) {
+    try {
+      const ids = JSON.parse(savedGifts);
+      guessedGifts = new Set(ids);
+    } catch (e) {
+      console.error("Error loading gift state", e);
+    }
+  }
+}
+
+function renderGiftGrid() {
+  if (!giftGrid) return;
+  giftGrid.innerHTML = "";
+  
+  GIFTS.forEach((gift) => {
+    const card = document.createElement("div");
+    card.className = "gift-card";
+    card.id = `gift-card-${gift.id}`;
+    
+    const isGuessed = guessedGifts.has(gift.id);
+    if (isGuessed) {
+      card.classList.add("guessed");
+    }
+    
+    card.innerHTML = `
+      <div class="gift-card-inner">
+        <div class="gift-card-front">
+          <div class="gift-front-emoji">🎁</div>
+          <div class="gift-label">Gift #${gift.id}</div>
+        </div>
+        <div class="gift-card-back">
+          <div class="gift-back-icon">${gift.icon}</div>
+          <div class="gift-back-name">${gift.name}</div>
+          <div class="gift-back-cheesy">${gift.cheesyLine}</div>
+        </div>
+      </div>
+    `;
+    
+    card.addEventListener("click", () => {
+      if (!guessedGifts.has(gift.id)) {
+        if (guessInput) guessInput.focus();
+        if (audioCtx) {
+          playChime(600, audioCtx.currentTime, 0.15);
+        }
+        if (guessFeedback) {
+          guessFeedback.textContent = `Try guessing Gift #${gift.id}! 🎁`;
+          guessFeedback.style.color = "var(--text-medium)";
+        }
+      }
+    });
+    
+    giftGrid.appendChild(card);
+  });
+  
+  if (giftsDiscoveredCount) {
+    giftsDiscoveredCount.textContent = guessedGifts.size;
+  }
+}
+
+function handleGuess() {
+  if (!guessInput || !guessFeedback || !giftsDiscoveredCount) return;
+  
+  const rawInput = guessInput.value;
+  const cleanInput = rawInput.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+  
+  if (!cleanInput) return;
+  
+  let foundGift = null;
+  
+  for (const gift of GIFTS) {
+    if (!guessedGifts.has(gift.id)) {
+      if (gift.keywords.some(keyword => cleanInput === keyword || cleanInput.includes(keyword))) {
+        foundGift = gift;
+        break;
+      }
+    }
+  }
+  
+  if (foundGift) {
+    guessedGifts.add(foundGift.id);
+    localStorage.setItem("nitya_birthday_gifts_guessed", JSON.stringify(Array.from(guessedGifts)));
+    guessInput.value = "";
+    
+    guessFeedback.textContent = `Yes! You revealed Gift #${foundGift.id}: ${foundGift.name}! 🎉`;
+    guessFeedback.style.color = "var(--hot-pink)";
+    
+    const card = document.getElementById(`gift-card-${foundGift.id}`);
+    if (card) {
+      card.classList.add("guessed");
+      card.classList.add("pop-success-scale");
+      
+      playPopSound();
+      
+      // Confetti burst
+      for (let i = 0; i < 40; i++) {
+        confettiParticles.push(new ConfettiParticle());
+      }
+    }
+    
+    giftsDiscoveredCount.textContent = guessedGifts.size;
+    
+    if (guessedGifts.size === GIFTS.length) {
+      setTimeout(() => {
+        if (completionModal) completionModal.classList.add("active");
+        if (audioCtx) {
+          const now = audioCtx.currentTime;
+          const tune = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98, 2093.00];
+          tune.forEach((f, idx) => {
+            playChime(f, now + idx * 0.1, 1.0);
+          });
+        }
+      }, 1500);
+    }
+  } else {
+    let alreadyGuessed = false;
+    for (const gift of GIFTS) {
+      if (guessedGifts.has(gift.id) && gift.keywords.some(keyword => cleanInput === keyword || cleanInput.includes(keyword))) {
+        alreadyGuessed = true;
+        guessFeedback.textContent = `You've already guessed "${gift.name}"! 😉`;
+        guessFeedback.style.color = "var(--text-medium)";
+        break;
+      }
+    }
+    
+    if (!alreadyGuessed) {
+      guessFeedback.textContent = "Hmm, that's not it! Keep thinking... 🤔";
+      guessFeedback.style.color = "var(--deep-blush)";
+      
+      if (audioCtx) {
+        playChime(150, audioCtx.currentTime, 0.25);
+      }
+      
+      guessInput.classList.add("wiggle-animation");
+      setTimeout(() => {
+        guessInput.classList.remove("wiggle-animation");
+      }, 500);
+    }
+  }
+}
+
+if (guessBtn) {
+  guessBtn.addEventListener("click", handleGuess);
+}
+if (guessInput) {
+  guessInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      handleGuess();
+    }
+  });
+}
+if (completionClose) {
+  completionClose.addEventListener("click", () => {
+    if (completionModal) completionModal.classList.remove("active");
+  });
 }

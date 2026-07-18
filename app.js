@@ -313,24 +313,38 @@ let songIndex = 0;
 function startMusicLoop() {
   if (musicInterval) return;
 
-  const tempo = 600; // time in ms per beat
-  musicInterval = setInterval(() => {
-    if (audioCtx.state === "suspended") return;
+  if (celebrationMode) {
+    const fastNotes = [523.25, 659.25, 783.99, 1046.50, 783.99, 659.25];
+    let fastIndex = 0;
+    musicInterval = setInterval(() => {
+      if (!audioCtx || audioCtx.state === "suspended") return;
+      const now = audioCtx.currentTime;
+      playChime(fastNotes[fastIndex], now, 0.8);
+      if (fastIndex === 0) {
+        playChime(261.63, now, 1.5); // C4 bass chime
+      }
+      fastIndex = (fastIndex + 1) % fastNotes.length;
+    }, 350);
+  } else {
+    const tempo = 600; // time in ms per beat
+    musicInterval = setInterval(() => {
+      if (!audioCtx || audioCtx.state === "suspended") return;
 
-    const [freq, _] = SONG_NOTES[songIndex];
-    const now = audioCtx.currentTime;
-    
-    // Play melody note
-    playChime(freq, now, 1.2);
+      const [freq, _] = SONG_NOTES[songIndex];
+      const now = audioCtx.currentTime;
+      
+      // Play melody note
+      playChime(freq, now, 1.2);
 
-    // Occasional gentle harmony bass note on beat 0, 4, 8, 12
-    if (songIndex % 4 === 0) {
-      const bassFreq = freq / 2; // one octave below
-      playChime(bassFreq, now, 1.8);
-    }
+      // Occasional gentle harmony bass note on beat 0, 4, 8, 12
+      if (songIndex % 4 === 0) {
+        const bassFreq = freq / 2; // one octave below
+        playChime(bassFreq, now, 1.8);
+      }
 
-    songIndex = (songIndex + 1) % SONG_NOTES.length;
-  }, tempo);
+      songIndex = (songIndex + 1) % SONG_NOTES.length;
+    }, tempo);
+  }
 }
 
 // Custom synthesised sound effects for interactions
@@ -828,15 +842,25 @@ if (videoModal) {
 
 
 // --- Gift Guessing Helper Functions ---
+let storageAvailable = true;
+try {
+  const testKey = "__storage_test__";
+  localStorage.setItem(testKey, testKey);
+  localStorage.removeItem(testKey);
+} catch (e) {
+  storageAvailable = false;
+}
+
 function initGiftGame() {
-  const savedGifts = localStorage.getItem("nitya_birthday_gifts_guessed");
-  if (savedGifts) {
-    try {
+  if (!storageAvailable) return;
+  try {
+    const savedGifts = localStorage.getItem("nitya_birthday_gifts_guessed");
+    if (savedGifts) {
       const ids = JSON.parse(savedGifts);
       guessedGifts = new Set(ids);
-    } catch (e) {
-      console.error("Error loading gift state", e);
     }
+  } catch (e) {
+    console.error("Error loading gift state", e);
   }
 }
 
@@ -910,7 +934,13 @@ function handleGuess() {
   
   if (foundGift) {
     guessedGifts.add(foundGift.id);
-    localStorage.setItem("nitya_birthday_gifts_guessed", JSON.stringify(Array.from(guessedGifts)));
+    if (storageAvailable) {
+      try {
+        localStorage.setItem("nitya_birthday_gifts_guessed", JSON.stringify(Array.from(guessedGifts)));
+      } catch (e) {
+        console.error("Error saving gift state", e);
+      }
+    }
     guessInput.value = "";
     
     guessFeedback.textContent = `Yes! You revealed Gift #${foundGift.id}: ${foundGift.name}! 🎉`;
